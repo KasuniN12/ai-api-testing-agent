@@ -1,0 +1,127 @@
+{
+  "timestamp": "20261116_163054",
+  "spec_title": "Sample User Management API",
+  "spec_version": "1.0.0",
+  "target_url": "http://127.0.0.1:8000",
+  "v1_metrics": {
+    "suite_version": "V1",
+    "total_tests": 4,
+    "passed": 4,
+    "failed": 0,
+    "coverage_percentage": 100.0,
+    "edge_cases": 0,
+    "quality_score": 0.41,
+    "duration_seconds": 0.076
+  },
+  "v2_metrics": {
+    "suite_version": "V2",
+    "total_tests": 13,
+    "passed": 11,
+    "failed": 2,
+    "coverage_percentage": 83.3,
+    "edge_cases": 9,
+    "quality_score": 0.69,
+    "duration_seconds": 0.187
+  },
+  "reflection_findings": {
+    "missing_scenarios": [
+      "GET /api/users missing scenario: boundary (field: query, variation: invalid_filter)",
+      "POST /api/users missing scenario: empty_input (field: body, variation: empty_payload)",
+      "POST /api/users missing scenario: empty_input (field: username, variation: missing_field)",
+      "POST /api/users missing scenario: empty_input (field: email, variation: missing_field)",
+      "POST /api/users missing scenario: invalid_type (field: email, variation: invalid_format)",
+      "GET /api/users/{id} missing scenario: boundary (field: id, variation: negative_value)",
+      "GET /api/users/{id} missing scenario: boundary (field: id, variation: out_of_bounds)",
+      "DELETE /api/users/{id} missing scenario: boundary (field: id, variation: negative_value)",
+      "DELETE /api/users/{id} missing scenario: boundary (field: id, variation: out_of_bounds)"
+    ],
+    "coverage_gaps": [],
+    "identified_issues": [
+      {
+        "category": "missing_edge_case",
+        "classification": "missing_boundary_check",
+        "confidence": "MEDIUM",
+        "endpoint": "/api/users",
+        "observation": "GET /api/users contains query parameters but lacks boundary/filter testing.",
+        "evidence": "Query Parameters: ['limit']",
+        "recommended_action": "Generate query parameter boundary test (e.g. limit=-1) for GET /api/users."
+      },
+      {
+        "category": "missing_edge_case",
+        "classification": "missing_validation_check",
+        "confidence": "HIGH",
+        "endpoint": "/api/users",
+        "observation": "POST /api/users accepts a JSON body but lacks empty body testing.",
+        "evidence": "No empty payload test in current suite.",
+        "recommended_action": "Add empty payload test case expecting 400 Bad Request for POST /api/users."
+      },
+      {
+        "category": "missing_edge_case",
+        "classification": "missing_validation_check",
+        "confidence": "HIGH",
+        "endpoint": "/api/users",
+        "observation": "POST /api/users requires 'username' in request body but lacks omission test.",
+        "evidence": "Schema required fields: ['username', 'email']",
+        "recommended_action": "Add test case submitting payload omitting required field 'username' for POST /api/users."
+      },
+      {
+        "category": "missing_edge_case",
+        "classification": "missing_validation_check",
+        "confidence": "HIGH",
+        "endpoint": "/api/users",
+        "observation": "POST /api/users requires 'email' in request body but lacks omission test.",
+        "evidence": "Schema required fields: ['username', 'email']",
+        "recommended_action": "Add test case submitting payload omitting required field 'email' for POST /api/users."
+      },
+      {
+        "category": "missing_edge_case",
+        "classification": "missing_format_validation",
+        "confidence": "HIGH",
+        "endpoint": "/api/users",
+        "observation": "POST /api/users specifies format 'email' on field 'email' but lacks malformed format test.",
+        "evidence": "Field 'email' declared format: email",
+        "recommended_action": "Add test submitting malformed string in field 'email' expecting 400 Bad Request for POST /api/users."
+      },
+      {
+        "category": "missing_edge_case",
+        "classification": "missing_boundary_check",
+        "confidence": "HIGH",
+        "endpoint": "/api/users/{id}",
+        "observation": "GET /api/users/{id} contains path parameters but lacks negative value boundary testing.",
+        "evidence": "Parameters: ['id']",
+        "recommended_action": "Generate boundary test with negative ID (e.g. -1) for GET /api/users/{id}."
+      },
+      {
+        "category": "missing_edge_case",
+        "classification": "missing_boundary_check",
+        "confidence": "HIGH",
+        "endpoint": "/api/users/{id}",
+        "observation": "DELETE /api/users/{id} contains path parameters but lacks negative value boundary testing.",
+        "evidence": "Parameters: ['id']",
+        "recommended_action": "Generate boundary test with negative ID (e.g. -1) for DELETE /api/users/{id}."
+      }
+    ],
+    "summary": "=== Iteration 1 Evidence-Based Reflection Audit ===\nTest Suite Quality Score: 0.41 / 1.00\n  [Coverage: 100.0% | Diversity: 20.0% | Edge Density: 0.0% | Defect Power: 0.0%]\nTarget API Health: HEALTHY (Pass Rate: 100.0%, Defects Discovered: 0)\nTests Executed: 4 (Passed: 4, Failed: 0, Errors: 0)\nEdge Cases Tested: 0 across 1 scenario types.\nIdentified Actionable Findings: 7 (Missing Scenarios: 9)."
+  },
+  "comparison": {
+    "initial_iteration": 1,
+    "final_iteration": 2,
+    "v1_total": 4,
+    "v1_passed": 4,
+    "v1_failed": 0,
+    "v2_total": 13,
+    "v2_passed": 11,
+    "v2_failed": 2,
+    "v1_coverage_percent": 100.0,
+    "v2_coverage_percent": 83.3,
+    "coverage_delta_percent": -16.7,
+    "new_edge_cases_count": 9,
+    "defects_detected_delta": 2,
+    "stopping_reason": null,
+    "summary": "Reflection Cycle Evolution (V1 -> V2): Test suite expanded from 4 to 13 tests (+9). Scenario coverage shifted from 100.0% to 83.3% (-16.7%). Edge cases added: 9. Defects surfaced: 2."
+  },
+  "generated_files": {
+    "v1_test_file": "artifacts/generated_tests/test_v1_iter1.py",
+    "v2_test_file": "artifacts/generated_tests/test_v2_iter2.py"
+  }
+}

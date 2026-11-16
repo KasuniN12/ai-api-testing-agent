@@ -1,0 +1,33 @@
+[build-system]
+requires = ["setuptools>=61.0"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "ai-api-testing-agent"
+version = "0.1.0"
+description = "An Agentic AI-powered API testing system that generates, executes, evaluates, and improves API test cases using the Reflection Design Pattern."
+readme = "README.md"
+requires-python = ">=3.11"
+authors = [
+    { name = "Kasuni" }
+]
+dependencies = [
+    "openai>=1.30.0",
+    "pydantic>=2.7.0",
+    "pydantic-settings>=2.2.0",
+    "httpx>=0.27.0",
+    "pytest>=8.2.0",
+    "streamlit>=1.35.0",
+    "pyyaml>=6.0.1",
+    "python-dotenv>=1.0.1",
+    "rich>=13.7.0"
+]
+
+[tool.ruff]
+line-length = 88
+target-version = "py311"
+
+[tool.pytest.ini_options]
+minversion = "8.0"
+testpaths = ["tests"]
+python_files = ["test_*.py"]
